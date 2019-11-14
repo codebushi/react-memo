@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import "./App.css";
 import ChildComponent from "./components/ChildComponent";
 
 function App() {
   const [count, setCount] = useState(0);
 
-  const array = ["One", "Two", "Three"];
+  const array = useMemo(() => {
+    return ["One", "Two", "Three"];
+  }, []);
 
   const fetchData = useCallback(type => {
     return fetch(`https://jsonplaceholder.typicode.com/${type}`)
@@ -31,7 +33,11 @@ function App() {
             ADD
           </button>
         </p>
-        <ChildComponent title="This is the title" fetchData={fetchData} />
+        <ChildComponent
+          title="This is the title"
+          array={array}
+          fetchData={fetchData}
+        />
       </header>
     </div>
   );
